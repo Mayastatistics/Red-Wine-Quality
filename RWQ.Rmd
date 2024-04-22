@@ -1,0 +1,27 @@
+---
+title: "Red Wine Quality"
+author: "Maja Bedenikovic"
+date: "2024-04-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+data=read.csv('winequality-red.csv')
+attach(data)
+```
+
+
+Verifying the type of data and null values
+
+```{r}
+str(data, na.rm=TRUE)
+```
+It shows us that all input variables are numerical (continuous), and quality is int (non-continous) variable. In total we have 1.599 observations and 12 variables. Even with na.rm = TRUE, we have the same amount of observations.
+
+```{r}
+summary(data)
+```
+
