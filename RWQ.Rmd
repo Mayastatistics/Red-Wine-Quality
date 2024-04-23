@@ -11,17 +11,62 @@ knitr::opts_chunk$set(echo = TRUE)
 
 data=read.csv('winequality-red.csv')
 attach(data)
+library(ggplot2)
 ```
 
+# 0. Intro
+In the README file on Github, you can read intro information about the dataset and variables in it. Here you will only find explanations of the code and the findings.
 
-Verifying the type of data and null values
+# 1. Verifying the type of data and null values
 
 ```{r}
 str(data, na.rm=TRUE)
 ```
-It shows us that all input variables are numerical (continuous), and quality is int (non-continous) variable. In total we have 1.599 observations and 12 variables. Even with na.rm = TRUE, we have the same amount of observations.
+
+It shows us that all input variables are numerical (continuous), and quality is int (non-continuous) variable. In total we have 1.599 observations and 12 variables. Even with na.rm = TRUE, we have the same amount of observations.
+
+# 2. About variables - summaries
 
 ```{r}
 summary(data)
 ```
+
+
+```{r}
+summary(fixed.acidity)
+qplot(fixed.acidity)
+```
+
+```{r}
+summary(volatile.acidity)
+qplot(volatile.acidity)
+```
+
+```{r}
+summary(citric.acid)
+qplot(citric.acid)
+```
+
+```{r}
+summary(residual.sugar)
+qplot(residual.sugar)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
