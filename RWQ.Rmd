@@ -30,34 +30,36 @@ It shows us that all input variables are numerical (continuous), and quality is 
 ```{r}
 summary(data)
 ```
+When it comes to skewness, we are always looking at mean and median value. If the mean is higher than median, then the distribution of the variable is skewed to the right (meaning that lower values are higher in number than higher values), and the other way around.
+
 
 
 ```{r}
 summary(fixed.acidity)
 qplot(fixed.acidity)
-```
-
-```{r}
 summary(volatile.acidity)
 qplot(volatile.acidity)
-```
-
-```{r}
 summary(citric.acid)
 qplot(citric.acid)
-```
-
-```{r}
 summary(residual.sugar)
 qplot(residual.sugar)
+summary(chlorides)
+qplot(chlorides)
+summary(free.sulfur.dioxide)
+qplot(free.sulfur.dioxide)
+summary(total.sulfur.dioxide)
+qplot(total.sulfur.dioxide)
+summary(density)
+qplot(density)
+summary(pH)
+qplot(pH)
+summary(sulphates)
+qplot(sulphates)
+summary(alcohol)
+qplot(alcohol)
+summary(quality)
+qplot(quality)
 ```
-
-
-
-
-
-
-
 
 
 
