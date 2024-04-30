@@ -15,6 +15,7 @@ library(ggplot2)
 ```
 
 # 0. Intro
+
 In the README file on Github, you can read intro information about the data set and variables in it. Here you will only find explanations of the code and the findings.
 
 # 1. Verifying the type of data and null values
@@ -31,7 +32,7 @@ It shows us that all input variables are numerical (continuous), and quality is 
 summary(data)
 ```
 
-When it comes to skewness, we are always looking at mean and median value. If the mean is higher than median, then the distribution of the variable is skewed to the right (meaning that lower values are higher in number than higher values), and the other way around. In order to see what kind of distribution is it (We are always happy with a normal distribution, without extreme outliers), I'm using summaries to see the numerical part, and histogram and boxplot to see the graphic notations of the outliers and the shape of the distribution.
+When it comes to skewness, we are always looking at mean and median value. If the mean is higher than median, then the distribution of the variable is skewed to the right (meaning that lower values are higher in number than higher values), and the other way around. In order to see what kind of distribution is it (we are always happy with a normal distribution, without extreme outliers), I'm using summaries to see the numerical part, and histogram and boxplot to see the graphic notations of the outliers and the shape of the distribution.
 
 Looking at the numerical part (summary), I'm comparing median and mean values to identify skewness. The only variable which is skewed to the left (meaning that it has more higher values than lower values) is density. The rest of the variables is very borderline, making me think that we will see quite nice normal distributions. But I'm not only looking at median and mean values, but also what is the difference between minimal and maximum value, in order to see what kind of spread of data I might see in the graphics. For example, variables residual sugar, fixed acidity and free sulfur dioxide have very big difference between their minimal and maximum value.
 
@@ -39,26 +40,44 @@ Let's see on the graphs how these distributions really look like, and decide wha
 
 # Graphics of variables - identifying distributions and outliers
 
+Below you can see the code and comments for the histograms of each variables. I'm using histograms first, to see the shape of the distributions, and possible outliers. Later on, I will give out the code for boxplots, for us to really see the dots which might represents possible outliers.
+
 ```{r}
 ggplot(data,aes(x=fixed.acidity)) + geom_histogram(fill="#704264",colour="black") # has outliers on the high side
 ggplot(data,aes(x=volatile.acidity)) + geom_histogram(fill="#704264",colour="black") # has outliers on the high side
 ggplot(data,aes(x=citric.acid)) + geom_histogram(fill="#704264",colour="black") # has almost bimodal distribution, and outliers on the high side
 ggplot(data,aes(x=residual.sugar)) + geom_histogram(fill="#704264",colour="black") # has outliers on the high side
 ggplot(data,aes(x=chlorides)) + geom_histogram(fill="#704264",colour="black") # has outliers on the high side
-ggplot(data,aes(x=free.sulfur.dioxide)) + geom_histogram(fill="#704264",colour="black") #has outliers on the high side
-ggplot(data,aes(x=total.sulfur.dioxide)) + geom_histogram(fill="#704264",colour="black") #has outliers on the high side
-ggplot(data,aes(x=density)) + geom_histogram(fill="#704264",colour="black") #has almost perfect distribution, nothing needs to be changed
-ggplot(data,aes(x=pH)) + geom_histogram(fill="#704264",colour="black") #has almost perfect distribution, but still somewhat of visible outliers on high side
-ggplot(data,aes(x=sulphates)) + geom_histogram(fill="#704264",colour="black") #outliers on high side
+ggplot(data,aes(x=free.sulfur.dioxide)) + geom_histogram(fill="#704264",colour="black") #h as outliers on the high side
+ggplot(data,aes(x=total.sulfur.dioxide)) + geom_histogram(fill="#704264",colour="black") # has outliers on the high side
+ggplot(data,aes(x=density)) + geom_histogram(fill="#704264",colour="black") # has almost perfect distribution, nothing needs to be changed
+ggplot(data,aes(x=pH)) + geom_histogram(fill="#704264",colour="black") # has almost perfect distribution, but still somewhat of visible outliers on high side
+ggplot(data,aes(x=sulphates)) + geom_histogram(fill="#704264",colour="black") # outliers on high side
 ggplot(data,aes(x=alcohol)) + geom_histogram(fill="#704264",colour="black") # not definite distribution, with some outliers on the high side
-ggplot(data,aes(x=quality)) + geom_histogram(fill="#704264",colour="black") # this is output variable, we need to leave this one as it is, as it will be a Y variable in our regression model later.
+ggplot(data,aes(x=quality)) + geom_histogram(fill="#704264",colour="black") # this is output variable, we need to leave this one as it is, as it will be a Y variable in our regression model later. Its deletion of some entries will be dependable on other input variables and its observation deletion.
 ```
 
-Above this text, you can see the code which I used to output graphics (histograms), and the comments next to it. 
+Here you can see the boxplots, to see how many outliers do we have, since histograms did reveal that we do indeed have some outliers. Everything that is being a dot here on the boxplots, is considered that it is higher than 1,5 * IQR. Extreme outliers are considered about 3 * IQR, but we still have to see how do we get rid of the outliers, and how will that affect our data. In order to not delete more than 10-30% of our data, we need to find a good quantile or trimmed mean, to get rid of the outliers. It will probably be that we will delete the lowest and highest 10% of the data, in order to get normal distributions.
 
 ```{r}
-boxplot(fixed.acidity)
-```
+ggplot(data,aes(x=fixed.acidity))+geom_boxplot(fill="#704264",colour="black") # has high/right outliers (some of them are even double the size of the mean) 
+ggplot(data,aes(x=volatile.acidity))+geom_boxplot(fill="#704264",colour="black") # has high/right outliers
+ggplot(data,aes(x=citric.acid))+geom_boxplot(fill="#704264",colour="black") # no changes need to be made
+ggplot(data,aes(x=residual.sugar))+geom_boxplot(fill="#704264",colour="black") # a lot of high/right outliers - definitely remove
+ggplot(data,aes(x=chlorides))+geom_boxplot(fill="#704264",colour="black") # a lot of high/right outliers - definitely remove
+ggplot(data,aes(x=free.sulfur.dioxide))+geom_boxplot(fill="#704264",colour="black") # has high/right outliers
+ggplot(data,aes(x=total.sulfur.dioxide))+geom_boxplot(fill="#704264",colour="black") # a lot of high/right outliers - definitely remove
+ggplot(data,aes(x=density))+geom_boxplot(fill="#704264",colour="black") # has both high and low outliers, but those are not quite seen as outliers, it is still inside normal-ish values
+ggplot(data,aes(x=pH))+geom_boxplot(fill="#704264",colour="black") # has both high and low outliers, but not quite seen as outliers
+ggplot(data,aes(x=sulphates))+geom_boxplot(fill="#704264",colour="black") # has a lot of high outliers
+ggplot(data,aes(x=alcohol))+geom_boxplot(fill="#704264",colour="black") # has some high outliers, but nothing too big
+ggplot(data,aes(x=quality))+geom_boxplot(fill="#704264",colour="black") # has two outliers on each side (high and low), will be consolidated more when we remove the other variables outliers.
+``` 
+
+
+Most of these variables have high outliers, aka outliers on the right side, and I am going further with the decision to just remove 10% of the highest values in this dataset, with hope that the lower outliers won't be as visible anymore.
+
+
 
 
 
