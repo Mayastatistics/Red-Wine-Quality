@@ -3,6 +3,9 @@
 ## INTRO
 On 22nd of April 2024, I have downloaded a Kaggle dataset named Red Wine quality (you can access it here https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009), and wanted to perform an EDA - Explorative Data Analysis. The dataset itself is not balanced, meaning that there is more normal wines, than excellent or poor ones. We can call that a normal picture of the population itself - you don't encounter an excellent or a very poor wine that often, as much as you do with normal wines.
 
+You can see Kaggle notebooks here:
+https://www.kaggle.com/code/majab95/red-wine-quality-outlier-investigation-part-1
+
 ## ABOUT THE DATASET AND VARIABLES
 
 There is 11 input variables, and 1 output variable:
